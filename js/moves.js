@@ -6,7 +6,7 @@ function damagecalculation(status, user, opp, damage) {
         if (opp.hp <= 0) {
             opp.hp = 0;
         }
-    } else if (status === special{
+    } else if (status === special){
         opp.hp -= Math.floor((22 * damage * user.sa / opp.sa / 50) + 2);
         if (opp.hp <= 0) {
             opp.hp = 0;
@@ -37,7 +37,7 @@ function spacialrend(user, opp) {
 
 // あくのはどう
 function darkpulse(user, opp) {
-    damagecalculation(special,user, opp, 80);
+    damagecalculation(special, user, opp, 80);
     $(".explanation").text(user.name + "のあくのはどう！");
     document.getElementById("bgm_attack").play();
 }
@@ -53,21 +53,21 @@ function harden(user, opp) {
 
 // かみつく
 function bite(user, opp) {
-    damagecalculation(physical,user, opp, 60);
+    damagecalculation(physical, user, opp, 60);
     $(".explanation").text(user.name + "のかみつく！");
     document.getElementById("bgm_attack").play();
 }
 
 // ガリョウテンセイ
 function dragonascent(user, opp) {
-    damagecalculation(physical,user, opp, 120);
+    damagecalculation(physical, user, opp, 120);
     $(".explanation").text(user.name + "のガリョウテンセイ！！！");
     document.getElementById("bgm_rayquaza").play();
     rayquaza();
 }
 
 // きょじゅうざん
-function behemothblade(physical,user, opp) {
+function behemothblade(physical, user, opp) {
     damagecalculation(user, opp, 100);
     $(".explanation").text(user.name + "のきょじゅうざん！！！");
     document.getElementById("bgm_attack").play();
@@ -89,7 +89,7 @@ function synthesis(user, opp) {
 
 // ゴーストダイブ
 function phantomforce(user, opp) {
-    damagecalculation(physical,user, opp, 90);
+    damagecalculation(physical, user, opp, 90);
     $(".explanation").text(user.name + "のゴーストダイブ！");
     document.getElementById("bgm_attack").play();
 }
@@ -117,7 +117,7 @@ function solarbeam(user, opp) {
 
 // たいあたり
 function tackle(user, opp) {
-    damagecalculation(physical,user, opp, 40);
+    damagecalculation(physical, user, opp, 40);
     $(".explanation").text(user.name + "のたいあたり！");
     document.getElementById("bgm_attack").play();
 }
@@ -134,14 +134,14 @@ function swoardsdance(user, opp) {
 
 // つるのむち
 function vinewhip(user, opp) {
-    damagecalculation(physical,user, opp, 45);
+    damagecalculation(physical, user, opp, 45);
     $(".explanation").text(user.name + "のつるのむち！");
     document.getElementById("bgm_attack").play();
 }
 
 // ときのほうこう
 function roaroftime(user, opp) {
-    damagecalculation(physical,user, opp, 150);
+    damagecalculation(physical, user, opp, 150);
     $(".explanation").text(user.name + "のときのほうこう！");
     document.getElementById("bgm_rayquaza").play();
     setTimeout(() => { document.getElementById("bgm_dialga").play(); }, 3200);
@@ -157,7 +157,7 @@ function dragonclaw(user, opp) {
 
 // ハイドロポンプ
 function hydropump(user, opp) {
-    damagecalculation(special,user, opp, 80);
+    damagecalculation(special, user, opp, 80);
     $(".explanation").text(user.name + "のハイドロポンプ！");
     document.getElementById("bgm_attack").play();
 }
@@ -185,14 +185,14 @@ function watershuriken(user, opp) {
 
 // みずでっぽう
 function watergun(user, opp) {
-    damagecalculation(special,user, opp, 40);
+    damagecalculation(special, user, opp, 40);
     $(".explanation").text(user.name + "のみずでっぽう！");
     document.getElementById("bgm_attack").play();
 }
 
 // リーフストーム
 function leafstorm(user, opp) {
-    damagecalculation(special,user, opp, 130);
+    damagecalculation(special, user, opp, 130);
     $(".explanation").text(user.name + "のリーフストーム！");
     document.getElementById("bgm_attack").play();
 }
@@ -206,7 +206,7 @@ function leafblade(user, opp) {
 
 // りゅうせいぐん
 function dracometeor(user, opp) {
-    damagecalculation(special,user, opp, 130);
+    damagecalculation(special, user, opp, 130);
     $(".explanation").text(user.name + "のりゅうせいぐん！");
     document.getElementById("bgm_attack").play();
 }
