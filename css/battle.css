@@ -1,0 +1,205 @@
+.flashImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* opacityはどれくらい透けて見えるかが指定される */
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 9999;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+
+.flashImage.show {
+    opacity: 1;
+}
+
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.enemy {
+    text-align: right;
+    margin-right: 65px;
+    align-items: flex-end;
+    margin-bottom: 0;
+}
+
+.statusopp {
+    padding-bottom: 0;
+    height: 30px;
+}
+
+.nameopp {
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    height: 52.5px;
+}
+
+.infoopp {
+    display: grid;
+    grid-template-columns: 300px 100px;
+    align-items: flex-start;
+    justify-content: right;
+    text-align: center;
+
+}
+
+.hpnumberopp {
+    margin-top: 2px;
+}
+
+.hpopp {
+    width: 300px;
+    height: 25px;
+    /* 範囲を超える部分は隠すように規定 */
+    overflow: hidden;
+    border: 3px solid #000;
+    box-shadow: 0 2px 0 #000;
+    border-radius: 10px;
+    margin-top: 0px;
+}
+
+.hpcontentopp {
+    height: 100%;
+    width: 100%;
+    /* ゲージの中の色が赤色のグラデーションになるように規定 */
+    background: linear-gradient(90deg, #ff4444, #ff8888);
+    transition: width 0.5s;
+    margin-top: 0px;
+}
+
+.nameuser {
+    display: flex;
+    align-items: flex-end;
+}
+
+.statusuer {
+    padding-bottom: 0;
+    height: 30px;
+    margin-left: 30px;
+}
+
+.friend {
+    text-align: left;
+    margin-left: 10px;
+    align-items: flex-end;
+    margin-bottom: 0;
+    padding-right: 60px;
+}
+
+.pokeball {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.infouser {
+    display: grid;
+    grid-template-columns: 300px 100px;
+    align-items: flex-start;
+    justify-content: left;
+    text-align: center;
+}
+
+.hpuser {
+    width: 300px;
+    height: 25px;
+    /* 範囲を超える部分は隠すように規定 */
+    overflow: hidden;
+    border: 3px solid #000;
+    box-shadow: 0 2px 0 #000;
+    border-radius: 10px;
+}
+
+.hpcontentuser {
+    height: 100%;
+    width: 100%;
+    /* ゲージの中の色が赤色のグラデーションになるように規定 */
+    background: linear-gradient(90deg, #ff4444, #ff8888);
+    transition: width 0.5s;
+}
+
+.hpnumberuser {
+    margin-top: 2px;
+}
+
+
+.image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+
+
+.userpokemon {
+    transform: scaleX(-1);
+    width: 320px;
+    height: 320px;
+}
+
+.opppokemon {
+    width: 320px;
+    height: 320px;
+}
+
+.buttons {
+    margin-left: 60px;
+}
+
+.movebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+}
+
+.move {
+    background: #000;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'PixelMplus', sans-serif;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px #000 inset;
+    cursor: pointer;
+    font-size: 12px;
+    width: 375px;
+    height: 100px;
+    font-size: 30px;
+}
+
+.control {
+    margin-top: 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+.move:hover {
+    background: #222;
+}
+
+.move:active {
+    background: #444;
+}
+
+.explanation {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 240px;
+    width: 520px;
+    margin: 0 auto;
+    display: flex;
+    margin-right: 50px;
+}
