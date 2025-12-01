@@ -1,7 +1,3 @@
-var bonus = document.getElementById("bonus");
-
-
-document.getElementById("bgm_pokemon_battle").volume = 0.35;
 
 // 画面を表示させるように設定する関数
 function showscreen(screen) {

@@ -6,7 +6,7 @@ function damagecalculation(status, user, opp, damage) {
         if (opp.hp <= 0) {
             opp.hp = 0;
         }
-    } else if (status === special){
+    } else if (status === special) {
         opp.hp -= Math.floor((22 * damage * user.sa / opp.sa / 50) + 2);
         if (opp.hp <= 0) {
             opp.hp = 0;
@@ -21,7 +21,7 @@ function healcalculation(user, opp, ratio) {
         user.hp = user.maxhp;
     }
 }
-
+var physical, special;
 // アクアリング
 function aquaring(user, opp) {
     healcalculation(user, opp, 0.2);
@@ -67,8 +67,8 @@ function dragonascent(user, opp) {
 }
 
 // きょじゅうざん
-function behemothblade(physical, user, opp) {
-    damagecalculation(user, opp, 100);
+function behemothblade(user, opp) {
+    damagecalculation(physical, user, opp, 100);
     $(".explanation").text(user.name + "のきょじゅうざん！！！");
     document.getElementById("bgm_attack").play();
 }
@@ -220,4 +220,33 @@ function dragondance(user, opp) {
         $(".explanation").text(user.name + "のこうげきとぼうぎょがすこしあがった！");
     }, 1000);
     document.getElementById("bgm_dragondance").play();
+}
+var movetable = {
+    aquaring: { name: "アクアリング", action: (user, opponent) => aquaring(user, opponent) },
+    spacialrend: { name: "あくうせつだん", action: (user, opponent) => spacialrend(user, opponent) },
+    darkpulse: { name: "あくのはどう", action: (user, opponent) => darkpulse(user, opponent) },
+    harden: { name: "かたくなる", action: (user, opponent) => harden(user, opponent) },
+    bite: { name: "かみつく", action: (user, opponent) => bite(user, opponent) },
+    dragonascent: { name: "ガリョウテンセイ", action: (user, opponent) => dragonascent(user, opponent) },
+    behemothblade: { name: "きょじゅうざん", action: (user, opponent) => behemothblade(user, opponent) },
+    slash: { name: "きりさく", action: (user, opponent) => slash(user, opponent) },
+    synthesis: { name: "こうごうせい", action: (user, opponent) => synthesis(user, opponent) },
+    phantomforce: { name: "ゴーストダイブ", action: (user, opponent) => phantomforce(user, opponent) },
+    shadowclaw: { name: "シャドークロー", action: (user, opponent) => shadowclaw(user, opponent) },
+    earthquake: { name: "じしん", action: (user, opponent) => earthquake(user, opponent) },
+    solarbeam: { name: "ソーラービーム", action: (user, opponent) => solarbeam(user, opponent) },
+    tackle: { name: "たいあたり", action: (user, opponent) => tackle(user, opponent) },
+    swoardsdance: { name: "つるぎのまい", action: (user, opponent) => swoardsdance(user, opponent) },
+    vinewhip: { name: "つるのむち", action: (user, opponent) => vinewhip(user, opponent) },
+    roaroftime: { name: "ときのほうこう", action: (user, opponent) => roaroftime(user, opponent) },
+    dragonclaw: { name: "ドラゴンクロー", action: (user, opponent) => dragonclaw(user, opponent) },
+    hydropump: { name: "ハイドロポンプ", action: (user, opponent) => hydropump(user, opponent) },
+    scratch: { name: "ひっかく", action: (user, opponent) => scratch(user, opponent)},
+    ember: { name: "ひのこ", action: (user, opponent) => ember(user, opponent) },
+    watershuriken: { name: "みずしゅりけん", action: (user, opponent) => watershuriken(user, opponent) },
+    watergun: { name: "みずでっぽう", action: (user, opponent) => watergun(user, opponent) },
+    leafstorm: { name: "リーフストーム", action: (user, opponent) => leafstorm(user, opponent) },
+    leafblade: { name: "リーフブレード", action: (user, opponent) => leafblade(user, opponent) },
+    dracometeor: { name: "りゅうせいぐん", action: (user, opponent) => dracometeor(user, opponent) },
+    dragondance: { name: "りゅうのまい", action: (user, opponent) => dragondance(user, opponent) },
 }

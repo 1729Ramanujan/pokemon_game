@@ -6,14 +6,12 @@ function disableButtons() {
     for (let i = 1; i <= 4; i++) {
         document.getElementById(`move${i}`).classList.add("hidden");
     }
-
 }
 
 function enableButtons() {
     for (let i = 1; i <= 4; i++) {
         document.getElementById(`move${i}`).classList.remove("hidden");
     }
-
 }
 
 function updateHP(user, opp) {
@@ -24,22 +22,12 @@ function updateHP(user, opp) {
     $(".friend").text(user.name + "  lv." + user.lv);
     $(".enemy").text(opp.name + "  lv." + opp.lv);
 }
-var opp_party = [
-    duplicate(darkraiTemplate, 50),
-    duplicate(venusaurTemplate, 50),
-    duplicate(sceptileTemplate, 50),
-    duplicate(bulbasaurTemplate, 50),
-    duplicate(rayquazaTemplate, 50),
-    duplicate(hydreigonTemplate, 50)
-];
-// var user_party = [
-//     duplicate(rayquazaTemplate, 50),
-//     duplicate(squirtleTemplate, 50),
-//     duplicate(serperiorTemplate, 50),
-//     duplicate(greninjaTemplate, 50),
-//     duplicate(dialgaTemplate, 50),
-//     // duplicate(zacianTemplate, 50)
-// ];
+
+const keys = Object.keys(pokemontable);
+const index = Math.floor(Math.random() * keys.length);
+const wildpokemon_id = keys[index]
+var opp_party = [duplicate(pokemontable[wildpokemon_id], Math.floor(Math.random() * (21)) + 30)];
+
 function restoredata(saved) {
     user_party = [];
     for (i = 0; i < saved.length; i++) {
@@ -124,15 +112,6 @@ function updatestatus(user, opp) {
             ball.src = "img/pokeball_fainted.png";
         }
     }
-    for (let i = 0; i <= 5; i++) {
-        const ball = document.getElementById(`pokeball${i + 7}`);
-
-        if (i < opp.length && opp[i].hp > 0) {
-            ball.src = "img/pokeball.png";
-        } else {
-            ball.src = "img/pokeball_fainted.png";
-        }
-    }
     for (let i = 0; i < user.length; i++) {
         var pokemon = document.getElementById(`pokemon${i + 1}`);
         pokemon.textContent = user_party[i].name;
@@ -189,7 +168,7 @@ function processFaint(isUser) {
         }, 1000);
     } else {
         setTimeout(() => {
-            $(".explanation").text("あいての" + opp_pokemon.name + "はたおれた！");
+            $(".explanation").text("やせいの" + opp_pokemon.name + "はたおれた！");
             opp_party = opp_party.filter(p => p.hp > 0);
 
             if (opp_party.length === 0) {
@@ -204,15 +183,6 @@ function processFaint(isUser) {
                 }, 1000);
                 return true;
             }
-
-            opp_pokemon = switchPokemon(opp_party);
-            setTimeout(() => {
-                $(".explanation").text("あいては" + opp_pokemon.name + "をくりだした！");
-                updatePokemon(user_pokemon, opp_pokemon);
-                updateHP(user_pokemon, opp_pokemon);
-                updatestatus(user_party, opp_party);
-                enableButtons();
-            }, 2000);
         }, 1000);
 
     }
@@ -231,6 +201,38 @@ function pokemonSwitch(index) {
 
 }
 
+function oppmove() {
+    takeTurn(opp_pokemon, user_pokemon, Math.floor(Math.random() * opp_pokemon.moves.length))
+    if (fainted(user_pokemon)) {
+        setTimeout(() => {
+            processFaint(true);
+        }, 1000)
+    }
+}
+
+function pokecatch(ratio) {
+    if (Math.random() <= ratio) {
+        user_party.push(opp_pokemon);
+        console.log(user_party);
+        $(".options").removeClass("hidden");
+        $(".tool").addClass("hidden");
+        savedata.push({ id: opp_pokemon.id, lv: opp_pokemon.lv })
+        localStorage.setItem("saveData", JSON.stringify(savedata));
+        $(".explanation").text(opp_pokemon.name + "をつかまえた！");
+        var enemy = document.getElementById("opppokemon");
+        enemy.classList.add("hidden");
+        var enemy1 = document.getElementById("enemy");
+        enemy1.classList.add("hidden");
+        disableButtons();
+    } else {
+        $(".explanation").text(opp_pokemon.name + "はボールから逃げ出した！");
+        setTimeout(() => {
+            oppmove();
+        }, 2000)
+    }
+    $(".options").removeClass("hidden");
+    $(".tool").addClass("hidden");
+}
 
 function battlestart() {
     $(".movebox").addClass("hidden");
@@ -240,10 +242,9 @@ function battlestart() {
     updateHP(user_pokemon, opp_pokemon);
     updatePokemon(user_pokemon, opp_pokemon);
     updatestatus(user_party, opp_party);
-
-    $(".explanation").text(user_pokemon.name + "をくりだした！");
+    $(".explanation").text("やせいの" + opp_pokemon.name + "がとびだしてきた！");
     setTimeout(() => {
-        $(".explanation").text("あいては" + opp_pokemon.name + "をくりだした！");
+        $(".explanation").text("いけ！" + user_pokemon.name + "!!");
         enableButtons();
     }, 2000);
 
@@ -310,20 +311,47 @@ function battlestart() {
     });
     // モンスターボールが押された時
     $("#tool1").on("click", function (event) {
-        if (Math.random <= 0.3) {
-            user_party.push(opp_pokemon);
-            opp_party.splice(currentopp_index, 1);
-            console.log(user_party);
-            $(".options").removeClass("hidden");
-            $(".tool").addClass("hidden");
-            savedata.push({ id: opp_pokemon.id, lv: opp_pokemon.lv })
-            localStorage.setItem("saveData", JSON.stringify(savedata));
-        } else {
-            $(".explanation").text(user_pokemon.name + "をくりだした！");
-            setTimeout(() => {
-                takeTurn(opp_pokemon, user_pokemon, Math.floor(Math.random() * opp_pokemon.moves.length))
-            }, 2000)
+        pokecatch(0.3);
+    });
+    // スーパーボールが押された時
+    $("#tool3").on("click", function (event) {
+        pokecatch(0.5);
+    });
+    // ハイパーボールが押された時
+    $("#tool5").on("click", function (event) {
+        pokecatch(0.7);
+    });
+    // マスターボールが押された時
+    $("#tool2").on("click", function (event) {
+        pokecatch(1);
+    });
+    // きずぐすりが押された時
+    $("#tool4").on("click", function (event) {
+        user_pokemon.hp += 20;
+        if (user_pokemon.hp >= user_pokemon.maxhp) {
+            user_pokemon.hp = user_pokemon.maxhp;
         }
+        updateHP(user_pokemon, opp_pokemon);
+        $(".explanation").text("キズぐすりをつかった！！");
+        setTimeout(() => {
+            oppmove();
+        }, 2000)
+        $(".options").removeClass("hidden");
+        $(".tool").addClass("hidden");
+    });
+    // いいきずぐすりが押された時
+    $("#tool6").on("click", function (event) {
+        user_pokemon.hp += 50;
+        if (user_pokemon.hp >= user_pokemon.maxhp) {
+            user_pokemon.hp = user_pokemon.maxhp;
+        }
+        updateHP(user_pokemon, opp_pokemon);
+        $(".explanation").text("いいキズぐすりをつかった！！");
+        setTimeout(() => {
+            oppmove();
+        }, 2000)
+        $(".options").removeClass("hidden");
+        $(".tool").addClass("hidden");
     });
     // ポケモンボタンが押されたとき
     $("#switch").on("click", function (event) {
@@ -337,8 +365,7 @@ function battlestart() {
             $(".pokemon").addClass("hidden");
             pokemonSwitch(index)
             setTimeout(() => {
-
-                takeTurn(opp_pokemon, user_pokemon, Math.floor(Math.random() * opp_pokemon.moves.length))
+                oppmove();
             }, 2000)
 
         };
