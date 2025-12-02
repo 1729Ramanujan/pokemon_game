@@ -26,25 +26,29 @@ function updateHP(user, opp) {
 const keys = Object.keys(pokemontable);
 const index = Math.floor(Math.random() * keys.length);
 const wildpokemon_id = keys[index]
-var opp_party = [duplicate(pokemontable[wildpokemon_id], Math.floor(Math.random() * (21)) + 30)];
+var opp_level = Math.floor(Math.random() * (21)) + 30;
+var opp_party = [duplicate(pokemontable[wildpokemon_id], opp_level, HPstatusCalculation(pokemontable[wildpokemon_id].maxhp, opp_level))];
 
 function restoredata(saved) {
     user_party = [];
     for (i = 0; i < saved.length; i++) {
         var template = pokemontable[saved[i].id];
-        user_party.push(duplicate(template, saved[i].lv));
+        user_party.push(duplicate(template, saved[i].lv, saved[i].hp));
     }
 
 }
-
-const saved = JSON.parse(localStorage.getItem("saveData"));
-if (saved !== null) {
-    restoredata(saved)
-    savedata = saved.slice();
+const savedUserParty = JSON.parse(localStorage.getItem("userParty"));
+var userPokebox = JSON.parse(localStorage.getItem("userPokebox"));
+if (userPokebox === null) {
+    userPokebox = [];
+}
+if (savedUserParty !== null) {
+    restoredata(savedUserParty)
+    userParty = savedUserParty.slice();
 } else {
-    var user_party = [duplicate(squirtleTemplate, 50)];
-    var savedata = [
-        { id: "squirtle", lv: 50 }
+    var user_party = [duplicate(squirtleTemplate, 50, HPstatusCalculation(squirtleTemplate.maxhp, 50))];
+    var userParty = [
+        { id: "squirtle", lv: 50, hp: HPstatusCalculation(squirtleTemplate.maxhp, 50) }
     ]
 }
 var movebuttons = [
@@ -72,12 +76,12 @@ function statusCalculation(base, level) {
 function HPstatusCalculation(base, level) {
     return Math.floor((2 * base * level / 100) + level + 10);
 }
-function duplicate(template, level) {
+function duplicate(template, level, hp) {
     return {
         id: template.id,
         name: template.name,
         maxhp: HPstatusCalculation(template.maxhp, level),
-        hp: HPstatusCalculation(template.maxhp, level),
+        hp: hp,
         a: statusCalculation(template.a, level),
         d: statusCalculation(template.d, level),
         sa: statusCalculation(template.sa, level),
@@ -210,28 +214,45 @@ function oppmove() {
     }
 }
 
+function updatePartyData() {
+    userParty = [];
+    for (i = 0; i < user_party.length; i++) {
+        userParty.push({ id: user_party[i].id, lv: user_party[i].lv, hp: user_party[i].hp });
+        console.log(userParty);
+    }
+}
+
 function pokecatch(ratio) {
+    $(".tool").addClass("hidden");
     if (Math.random() <= ratio) {
-        user_party.push(opp_pokemon);
-        console.log(user_party);
-        $(".options").removeClass("hidden");
-        $(".tool").addClass("hidden");
-        savedata.push({ id: opp_pokemon.id, lv: opp_pokemon.lv })
-        localStorage.setItem("saveData", JSON.stringify(savedata));
-        $(".explanation").text(opp_pokemon.name + "をつかまえた！");
+        // まず相手のポケモンの姿を隠す
         var enemy = document.getElementById("opppokemon");
         enemy.classList.add("hidden");
         var enemy1 = document.getElementById("enemy");
         enemy1.classList.add("hidden");
-        disableButtons();
+        if (user_party.length <= 5) {
+            user_party.push(opp_pokemon);
+            updatePartyData();
+            // 確認用
+            console.log(user_party);
+            // ローカルストレージの手持ちのところに情報を保存
+            localStorage.setItem("userParty", JSON.stringify(userParty));
+        } else {
+            userPokebox.push({ id: opp_pokemon.id, lv: opp_pokemon.lv, hp: opp_pokemon.hp });
+            localStorage.setItem("userPokebox", JSON.stringify(userPokebox));
+        }
+        $(".explanation").text(opp_pokemon.name + "をつかまえた！");
+        setTimeout(() => {
+            $(".explanation").text(opp_pokemon.name + "の情報が図鑑に登録されます！");
+        }, 1000)
     } else {
         $(".explanation").text(opp_pokemon.name + "はボールから逃げ出した！");
         setTimeout(() => {
             oppmove();
+            $(".options").removeClass("hidden");
+            $(".tool").addClass("hidden");
         }, 2000)
     }
-    $(".options").removeClass("hidden");
-    $(".tool").addClass("hidden");
 }
 
 function battlestart() {
