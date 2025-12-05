@@ -1,3 +1,37 @@
+
+// 画面を表示させるように設定する関数
+function showscreen(screen) {
+    // 最初に全てのbgmは止める
+    document.getElementById("bgm_pokemon_battle").pause();
+
+    // もし音楽が流れているなら、音楽の最初に戻る様に設定
+    document.getElementById("bgm_pokemon_battle").currentTime = 0;
+
+    // 全ての画面からactiveを取り除いて非表示にしている
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    // 最初に入力されてるscreenに.activeを追加する→表示させたいやつだけが表示する様になる
+    setTimeout(() => {
+        screen.classList.add("active");
+    }, 1000);
+    // どの画面にいるのかに応じて背景の画像とbgmを変更している！
+    if (screen.id === "bonus") {
+        document.body.style.backgroundImage = "url('img/background4.jpeg')";
+        document.getElementById("bgm_pokemon_battle").play();
+    }
+}
+
+window.onload = () => {
+    showscreen(battle);
+};
+
+// // 最初にクリックされたらbgmが流れるように設定
+// window.addEventListener("click", function initAudio() {
+//     //  クリック時の再生
+//     document.getElementById("").play();
+//     // クリックに応じて何回も再生されたらやばいので、一度だけ実行する
+//     window.removeEventListener("click", initAudio);
+// });
+
 var bonus = document.getElementById("bonus");
 
 document.getElementById("bgm_pokemon_battle").volume = 0.35;
@@ -23,16 +57,16 @@ function updateHP(user, opp) {
     $(".enemy").text(opp.name + "  lv." + opp.lv);
 }
 
-const keys = Object.keys(pokemontable);
+const keys = Object.keys(legendpokemontable);
 const index = Math.floor(Math.random() * keys.length);
 const wildpokemon_id = keys[index]
 var opp_level = Math.floor(Math.random() * (21)) + 30;
-var opp_party = [duplicate(pokemontable[wildpokemon_id], opp_level, HPstatusCalculation(pokemontable[wildpokemon_id].maxhp, opp_level))];
+var opp_party = [duplicate(legendpokemontable[wildpokemon_id], opp_level, HPstatusCalculation(legendpokemontable[wildpokemon_id].maxhp, opp_level))];
 
 function restoredata(saved) {
     user_party = [];
     for (i = 0; i < saved.length; i++) {
-        var template = pokemontable[saved[i].id];
+        var template = legendpokemontable[saved[i].id];
         user_party.push(duplicate(template, saved[i].lv, saved[i].hp));
     }
 
@@ -157,7 +191,9 @@ function processFaint(isUser) {
                 user.classList.add("hidden");
                 var user1 = document.getElementById("friend");
                 user1.classList.add("hidden");
-                // setTimeout(() => showscreen(start), 1500);
+                setTimeout(() => {
+                    location.href = "index.html";
+                }, 1000)
                 return true;
             }
 
@@ -183,7 +219,9 @@ function processFaint(isUser) {
                     enemy.classList.add("hidden");
                     var enemy1 = document.getElementById("enemy");
                     enemy1.classList.add("hidden");
-                    // setTimeout(() => { showscreen(start); }, 2000);
+                    setTimeout(() => {
+                        location.href = "index.html";
+                    }, 1000)
                 }, 1000);
                 return true;
             }
@@ -224,35 +262,50 @@ function updatePartyData() {
 
 function pokecatch(ratio) {
     $(".tool").addClass("hidden");
-    if (Math.random() <= ratio) {
-        // まず相手のポケモンの姿を隠す
-        var enemy = document.getElementById("opppokemon");
-        enemy.classList.add("hidden");
-        var enemy1 = document.getElementById("enemy");
-        enemy1.classList.add("hidden");
-        if (user_party.length <= 5) {
-            user_party.push(opp_pokemon);
-            updatePartyData();
-            // 確認用
-            console.log(user_party);
-            // ローカルストレージの手持ちのところに情報を保存
-            localStorage.setItem("userParty", JSON.stringify(userParty));
+    // まず相手のポケモンの姿を隠す
+    var enemy = document.getElementById("opppokemon");
+    enemy.classList.add("hidden");
+    setTimeout(() => {
+        if (Math.random() <= ratio) {
+            if (user_party.length <= 5) {
+                var enemy1 = document.getElementById("enemy");
+                enemy1.classList.add("hidden");
+                user_party.push(opp_pokemon);
+                updatePartyData();
+                // 確認用
+                console.log(user_party);
+                // ローカルストレージの手持ちのところに情報を保存
+                localStorage.setItem("userParty", JSON.stringify(userParty));
+                var isBox = false;
+            } else {
+                userPokebox.push({ id: opp_pokemon.id, lv: opp_pokemon.lv, hp: opp_pokemon.hp });
+                localStorage.setItem("userPokebox", JSON.stringify(userPokebox));
+            }
+            $(".explanation").text(opp_pokemon.name + "をつかまえた！");
+            setTimeout(() => {
+                $(".explanation").text(opp_pokemon.name + "の情報が図鑑に登録されます！");
+                setTimeout(() => {
+                    if (isBox === false) {
+                        $(".explanation").text(opp_pokemon.name + "はてもちに加えられた！");
+                    } else {
+                        $(".explanation").text(opp_pokemon.name + "はボックスに送られた！");
+                    }
+                    setTimeout(() => {
+                        location.href = "index.html";
+                    }, 1000)
+                }, 2000)
+            }, 1000)
         } else {
-            userPokebox.push({ id: opp_pokemon.id, lv: opp_pokemon.lv, hp: opp_pokemon.hp });
-            localStorage.setItem("userPokebox", JSON.stringify(userPokebox));
+            $(".explanation").text(opp_pokemon.name + "はボールから逃げ出した！");
+            enemy.classList.remove("hidden");
+            setTimeout(() => {
+                oppmove();
+                $(".options").removeClass("hidden");
+                $(".tool").addClass("hidden");
+            }, 2000)
         }
-        $(".explanation").text(opp_pokemon.name + "をつかまえた！");
-        setTimeout(() => {
-            $(".explanation").text(opp_pokemon.name + "の情報が図鑑に登録されます！");
-        }, 1000)
-    } else {
-        $(".explanation").text(opp_pokemon.name + "はボールから逃げ出した！");
-        setTimeout(() => {
-            oppmove();
-            $(".options").removeClass("hidden");
-            $(".tool").addClass("hidden");
-        }, 2000)
-    }
+    }, 2000)
+
 }
 
 function battlestart() {
@@ -332,18 +385,24 @@ function battlestart() {
     });
     // モンスターボールが押された時
     $("#tool1").on("click", function (event) {
-        pokecatch(0.3);
+        $(".explanation").text("モンスターボールを使った！！");
+        setTimeout(() => {
+            pokecatch(0.3);
+        }, 1000)
     });
     // スーパーボールが押された時
     $("#tool3").on("click", function (event) {
+        $(".explanation").text("スーパーボールを使った！！");
         pokecatch(0.5);
     });
     // ハイパーボールが押された時
     $("#tool5").on("click", function (event) {
+        $(".explanation").text("ハイパーボールを使った！！");
         pokecatch(0.7);
     });
     // マスターボールが押された時
     $("#tool2").on("click", function (event) {
+        $(".explanation").text("マスターボールを使った！！");
         pokecatch(1);
     });
     // きずぐすりが押された時

@@ -1,50 +1,41 @@
-/* ビット文字のダウンロード部分 */
-@font-face {
-    font-family: 'PixelMplus';
-    src: url(../fonts/PixelMplus10-Bold.ttf) format('truetype');
-}
-
-/* スタート画面、ゲーム画面、リザルト画面を最初は透明にして、移り変わりの速度を設定している */
-.screen {
-    /* display: none; */
+/* 画面（カメラ）のサイズ */
+.view {
+    left: 50%;
+    top: 50%;
+    width: 480px;
+    /* 好きなサイズに調整 */
+    height: 320px;
+    border: 2px solid #333;
     position: absolute;
-    inset: 0;
-    opacity: 0;
-    /* image-rendering: pixelated; */
-    /* これはクリックしても何も反応しない様にしてる。透明な状態のままだと、
-    何もないところをクリックしたら反応する可能性があるから */
-    pointer-events: none;
-    transition: opacity 0.2s steps(10);
-    z-index: 10px;
+    overflow: hidden;
+    /* はみ出したマップは見せない */
+    transform: translate(-50%, -50%);
 }
 
-/* js上で.activeをスクリーンにつけたら透明度が１になって表示される様に操作している */
-.screen.active {
-    /* display: block; */
-    opacity: 1;
-    pointer-events: auto;
-}
-
-body {
-    background-image: url('../img/background/battle.jpeg');
+/* マップ本体（大きい） */
+.map {
+    width: 1728px;
+    height: 1024px;
+    background-image: url("../img/background/map1.png");
+    /* 自分のマップ画像に差し替え */
     background-size: cover;
+    position: absolute;
+}
+
+/* プレイヤー（画面中央に固定） */
+.player {
+    width: 32px;
+    height: 32px;
+    background-size: 32px 32px;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'PixelMplus';
     background-position: center;
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    background-image: url("../img/player.png");
+    /* 本当はキャラのドット絵に差し替え */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* 完全に中央 */
+    z-index: 1000;
+    /* マップの上に表示 */
 }
-
-.title1 {
-    font-size: 100px;
-}
-

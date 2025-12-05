@@ -1,4 +1,28 @@
 // ポケモンの名前、画像、ステータスを保存する場所
+var arbokTemplate = {
+    id: "arbok",
+    name: "アーボック",
+    maxhp: 60,
+    a: 95,
+    d: 69,
+    sa: 65,
+    sd: 79,
+    s: 80,
+    img: "./img/pokemon/arbok.png",
+    moves: ["crunch", "acidspray", "icefang", "darkpulse"]
+};
+var beedrillTemplate = {
+    id: "beedrill",
+    name: "スピアー",
+    maxhp: 65,
+    a: 90,
+    d: 40,
+    sa: 45,
+    sd: 80,
+    s: 75,
+    img: "./img/pokemon/beedrill.png",
+    moves: ["poisonjab", "solarbeam", "acrobatics", "swoardsdance"]
+};
 var bulbasaurTemplate = {
     id: "bulbasaur",
     name: "フシギダネ",
@@ -143,19 +167,40 @@ var zacianTemplate = {
     img: "./img/pokemon/zacian.png",
     moves: ["behemothblade", "swoardsdance", "bite", "slash"]
 };
+var pidgeotTemplate = {
+    id: "pidgeot",
+    name: "ピジョット",
+    maxhp: 83,
+    a: 80,
+    d: 75,
+    sa: 70,
+    sd: 70,
+    s: 101,
+    img: "./img/pokemon/pidgeot.png",
+    moves: ["fly", "aircutter", "airslash", "bravebird"]
+};
 
-var pokemontable={
+var grasspokemontable = {
     bulbasaur: bulbasaurTemplate,
-    serperior: serperiorTemplate,
-    greninja: greninjaTemplate,
     charmander: charmanderTemplate,
     squirtle: squirtleTemplate,
+    beedrill: beedrillTemplate,
+    arbok: arbokTemplate,
+    pidgeot: pidgeotTemplate
+}
+
+var rockpokemontable = {
+    serperior: serperiorTemplate,
+    greninja: greninjaTemplate,
     venusaur: venusaurTemplate,
+    sceptile: sceptileTemplate,
+    hydreigon: hydreigonTemplate,
+}
+
+var legendpokemontable = {
     darkrai: darkraiTemplate,
     dialga: dialgaTemplate,
     rayquaza: rayquazaTemplate,
-    sceptile: sceptileTemplate,
-    hydreigon: hydreigonTemplate,
     zacian: zacianTemplate
 }
 

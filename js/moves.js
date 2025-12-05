@@ -1,4 +1,6 @@
 // ここからは技のデータを保存する場所
+var physical = "physical";
+var special = "special";
 // 物理ダメージが発生する技の時に、具体的にどれくらいのダメージが生じるのかを計算する関数
 function damagecalculation(status, user, opp, damage) {
     if (status === physical) {
@@ -7,7 +9,7 @@ function damagecalculation(status, user, opp, damage) {
             opp.hp = 0;
         }
     } else if (status === special) {
-        opp.hp -= Math.floor((22 * damage * user.sa / opp.sa / 50) + 2);
+        opp.hp -= Math.floor((22 * damage * user.sa / opp.sd / 50) + 2);
         if (opp.hp <= 0) {
             opp.hp = 0;
         }
@@ -21,7 +23,12 @@ function healcalculation(user, opp, ratio) {
         user.hp = user.maxhp;
     }
 }
-var physical, special;
+// アシッドボム
+function acidspray(user, opp) {
+    damagecalculation(special, user, opp, 40);
+    $(".explanation").text(user.name + "のアシッドボム！");
+    document.getElementById("bgm_attack").play();
+}
 // アクアリング
 function aquaring(user, opp) {
     healcalculation(user, opp, 0.2);
@@ -42,6 +49,25 @@ function darkpulse(user, opp) {
     document.getElementById("bgm_attack").play();
 }
 
+// アクロバット
+function acrobatics(user, opp) {
+    damagecalculation(special, user, opp, 55);
+    $(".explanation").text(user.name + "のアクロバット！");
+    document.getElementById("bgm_attack").play();
+}
+
+// エアカッター
+function aircutter(user, opp) {
+    damagecalculation(special, user, opp, 60);
+    $(".explanation").text(user.name + "のエアカッター");
+    document.getElementById("bgm_attack").play();
+}
+// エアスラッシュ
+function airslash(user, opp) {
+    damagecalculation(special, user, opp, 80);
+    $(".explanation").text(user.name + "のエアスラッシュ！");
+    document.getElementById("bgm_attack").play();
+}
 // かたくなる
 function harden(user, opp) {
     user.d = user.d * 1.5;
@@ -49,6 +75,12 @@ function harden(user, opp) {
     setTimeout(() => {
         $(".explanation").text(user.name + "のぼうぎょがあがった！");
     }, 1000);
+}
+// かみくだく
+function crunch(user, opp) {
+    damagecalculation(physical, user, opp, 80);
+    $(".explanation").text(user.name + "のかみくだく！");
+    document.getElementById("bgm_attack").play();
 }
 
 // かみつく
@@ -87,6 +119,13 @@ function synthesis(user, opp) {
     document.getElementById("bgm_attack").play();
 }
 
+// こおりのきば
+function icefang(user, opp) {
+    damagecalculation(physical, user, opp, 65);
+    $(".explanation").text(user.name + "のこおりのきば！");
+    document.getElementById("bgm_attack").play();
+}
+
 // ゴーストダイブ
 function phantomforce(user, opp) {
     damagecalculation(physical, user, opp, 90);
@@ -107,7 +146,12 @@ function earthquake(user, opp) {
     $(".explanation").text(user.name + "のじしん！");
     document.getElementById("bgm_attack").play();
 }
-
+// そらをとぶ
+function fly(user, opp) {
+    damagecalculation(physical, user, opp, 90);
+    $(".explanation").text(user.name + "のそらをとぶ！");
+    document.getElementById("bgm_attack").play();
+}
 // ソーラービーム
 function solarbeam(user, opp) {
     damagecalculation(special, user, opp, 120);
@@ -147,6 +191,12 @@ function roaroftime(user, opp) {
     setTimeout(() => { document.getElementById("bgm_dialga").play(); }, 3200);
     dialga();
 }
+// どくづき
+function poisonjab(user, opp) {
+    damagecalculation(physical, user, opp, 80);
+    $(".explanation").text(user.name + "のどくづき！");
+    document.getElementById("bgm_attack").play();
+}
 
 // ドラゴンクロー
 function dragonclaw(user, opp) {
@@ -173,6 +223,13 @@ function scratch(user, opp) {
 function ember(user, opp) {
     damagecalculation(special, user, opp, 40);
     $(".explanation").text(user.name + "のひのこ！");
+    document.getElementById("bgm_attack").play();
+}
+
+// ブレイブバード
+function bravebird(user, opp) {
+    damagecalculation(physical, user, opp, 40);
+    $(".explanation").text(user.name + "のブレイブバード！");
     document.getElementById("bgm_attack").play();
 }
 
@@ -241,12 +298,20 @@ var movetable = {
     roaroftime: { name: "ときのほうこう", action: (user, opponent) => roaroftime(user, opponent) },
     dragonclaw: { name: "ドラゴンクロー", action: (user, opponent) => dragonclaw(user, opponent) },
     hydropump: { name: "ハイドロポンプ", action: (user, opponent) => hydropump(user, opponent) },
-    scratch: { name: "ひっかく", action: (user, opponent) => scratch(user, opponent)},
+    scratch: { name: "ひっかく", action: (user, opponent) => scratch(user, opponent) },
     ember: { name: "ひのこ", action: (user, opponent) => ember(user, opponent) },
     watershuriken: { name: "みずしゅりけん", action: (user, opponent) => watershuriken(user, opponent) },
     watergun: { name: "みずでっぽう", action: (user, opponent) => watergun(user, opponent) },
     leafstorm: { name: "リーフストーム", action: (user, opponent) => leafstorm(user, opponent) },
     leafblade: { name: "リーフブレード", action: (user, opponent) => leafblade(user, opponent) },
     dracometeor: { name: "りゅうせいぐん", action: (user, opponent) => dracometeor(user, opponent) },
-    dragondance: { name: "りゅうのまい", action: (user, opponent) => dragondance(user, opponent) },
+    fly: { name: "そらをとぶ", action: (user, opponent) => fly(user, opponent) },
+    airslash: { name: "エアスラッシュ", action: (user, opponent) => airslash(user, opponent) },
+    aircutter: { name: "エアカッター", action: (user, opponent) => aircutter(user, opponent) },
+    bravebird: { name: "ブレイブバード", action: (user, opponent) => bravebird(user, opponent) },
+    crunch: { name: "かみくだく", action: (user, opponent) => crunch(user, opponent) },
+    acidspray: { name: "アシッドボム", action: (user, opponent) => acidspray(user, opponent) },
+    icefang: { name: "こおりのきば", action: (user, opponent) => icefang(user, opponent) },
+    poisonjab: { name: "どくづき", action: (user, opponent) => poisonjab(user, opponent) },
+    acrobatics: { name: "アクロバット", action: (user, opponent) => acrobatics(user, opponent) }
 }
