@@ -162,6 +162,7 @@ function blackholeStartEvent() {
     if (!isInBlackhole(playerX, playerY)) {
         return;
     }
+    userPosition = [map_width / 2, map_height / 2];
     localStorage.setItem("userPosition", JSON.stringify(playerPosition));
     location.href = "legend_battle.html";
 }

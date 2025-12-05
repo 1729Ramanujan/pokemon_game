@@ -180,6 +180,24 @@ var pidgeotTemplate = {
     moves: ["fly", "aircutter", "airslash", "bravebird"]
 };
 
+var pokemontable = {
+    bulbasaur: bulbasaurTemplate,
+    charmander: charmanderTemplate,
+    squirtle: squirtleTemplate,
+    beedrill: beedrillTemplate,
+    arbok: arbokTemplate,
+    pidgeot: pidgeotTemplate,
+    serperior: serperiorTemplate,
+    greninja: greninjaTemplate,
+    venusaur: venusaurTemplate,
+    sceptile: sceptileTemplate,
+    hydreigon: hydreigonTemplate,
+    darkrai: darkraiTemplate,
+    dialga: dialgaTemplate,
+    rayquaza: rayquazaTemplate,
+    zacian: zacianTemplate
+}
+
 var grasspokemontable = {
     bulbasaur: bulbasaurTemplate,
     charmander: charmanderTemplate,

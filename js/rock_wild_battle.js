@@ -66,7 +66,7 @@ var opp_party = [duplicate(rockpokemontable[wildpokemon_id], opp_level, HPstatus
 function restoredata(saved) {
     user_party = [];
     for (i = 0; i < saved.length; i++) {
-        var template = rockpokemontable[saved[i].id];
+        var template = pokemontable[saved[i].id];
         user_party.push(duplicate(template, saved[i].lv, saved[i].hp));
     }
 
