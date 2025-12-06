@@ -103,6 +103,7 @@ function behemothblade(user, opp) {
     damagecalculation(physical, user, opp, 100);
     $(".explanation").text(user.name + "のきょじゅうざん！！！");
     document.getElementById("bgm_attack").play();
+    zacian();
 }
 
 // きりさく
@@ -131,6 +132,7 @@ function phantomforce(user, opp) {
     damagecalculation(physical, user, opp, 90);
     $(".explanation").text(user.name + "のゴーストダイブ！");
     document.getElementById("bgm_attack").play();
+    darkrai();
 }
 
 // シャドークロー
@@ -313,5 +315,6 @@ var movetable = {
     acidspray: { name: "アシッドボム", action: (user, opponent) => acidspray(user, opponent) },
     icefang: { name: "こおりのきば", action: (user, opponent) => icefang(user, opponent) },
     poisonjab: { name: "どくづき", action: (user, opponent) => poisonjab(user, opponent) },
-    acrobatics: { name: "アクロバット", action: (user, opponent) => acrobatics(user, opponent) }
+    acrobatics: { name: "アクロバット", action: (user, opponent) => acrobatics(user, opponent) },
+    dragondance: { name: "りゅうのまい", action: (user, opponent) => dragondance(user, opponent) }
 }

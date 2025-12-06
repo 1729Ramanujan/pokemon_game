@@ -8,8 +8,9 @@ var arbokTemplate = {
     sa: 65,
     sd: 79,
     s: 80,
+    catchrate: 90,
     img: "./img/pokemon/arbok.png",
-    moves: ["crunch", "acidspray", "icefang", "darkpulse"]
+    moves: ["crunch", "acidspray", "icefang", "darkpulse"],
 };
 var beedrillTemplate = {
     id: "beedrill",
@@ -20,8 +21,10 @@ var beedrillTemplate = {
     sa: 45,
     sd: 80,
     s: 75,
+    catchrate: 45,
     img: "./img/pokemon/beedrill.png",
     moves: ["poisonjab", "solarbeam", "acrobatics", "swoardsdance"]
+
 };
 var bulbasaurTemplate = {
     id: "bulbasaur",
@@ -32,6 +35,7 @@ var bulbasaurTemplate = {
     sa: 65,
     sd: 65,
     s: 45,
+    catchrate: 45,
     img: "./img/pokemon/bulbasaur.png",
     moves: ["tackle", "harden", "vinewhip", "scratch"]
 };
@@ -44,6 +48,7 @@ var serperiorTemplate = {
     sa: 75,
     sd: 95,
     s: 113,
+    catchrate: 45,
     img: "./img/pokemon/serperior.png",
     moves: ["vinewhip", "leafstorm", "leafblade", "solarbeam"]
 };
@@ -56,6 +61,7 @@ var greninjaTemplate = {
     sa: 103,
     sd: 71,
     s: 122,
+    catchrate: 45,
     img: "./img/pokemon/greninja.png",
     moves: ["watershuriken", "swoardsdance", "hydropump", "watergun"]
 };
@@ -68,6 +74,7 @@ var charmanderTemplate = {
     sa: 60,
     sd: 50,
     s: 65,
+    catchrate: 45,
     img: "./img/pokemon/charmander.png",
     moves: ["scratch", "tackle", "ember", "slash"]
 };
@@ -80,6 +87,7 @@ var squirtleTemplate = {
     sa: 50,
     sd: 64,
     s: 43,
+    catchrate: 45,
     img: "./img/pokemon/squirtle.png",
     moves: ["tackle", "harden", "aquaring", "watergun"]
 };
@@ -92,6 +100,7 @@ var venusaurTemplate = {
     sa: 100,
     sd: 100,
     s: 80,
+    catchrate: 45,
     img: "./img/pokemon/venusaur.png",
     moves: ["vinewhip", "earthquake", "leafstorm", "solarbeam"]
 };
@@ -104,6 +113,7 @@ var darkraiTemplate = {
     sa: 135,
     sd: 90,
     s: 125,
+    catchrate: 3,
     img: "./img/pokemon/darkrai.png",
     moves: ["darkpulse", "shadowclaw", "swoardsdance", "phantomforce"]
 };
@@ -116,6 +126,7 @@ var dialgaTemplate = {
     sa: 150,
     sd: 100,
     s: 90,
+    catchrate: 30,
     img: "./img/pokemon/dialga.png",
     moves: ["roaroftime", "swoardsdance", "spacialrend", "dragonclaw"]
 };
@@ -128,6 +139,7 @@ var rayquazaTemplate = {
     sa: 150,
     sd: 90,
     s: 95,
+    catchrate: 3,
     img: "./img/pokemon/rayquaza.png",
     moves: ["dragonclaw", "dragonascent", "dragondance", "dracometeor"]
 };
@@ -140,6 +152,7 @@ var sceptileTemplate = {
     sa: 105,
     sd: 85,
     s: 120,
+    catchrate: 45,
     img: "./img/pokemon/sceptile.png",
     moves: ["leafblade", "swoardsdance", "leafstorm", "solarbeam"]
 };
@@ -152,6 +165,7 @@ var hydreigonTemplate = {
     sa: 125,
     sd: 90,
     s: 98,
+    catchrate: 45,
     img: "./img/pokemon/hydreigon.png",
     moves: ["dragonclaw", "dragondance", "dracometeor", "shadowclaw"]
 };
@@ -164,6 +178,7 @@ var zacianTemplate = {
     sa: 80,
     sd: 115,
     s: 148,
+    catchrate: 10,
     img: "./img/pokemon/zacian.png",
     moves: ["behemothblade", "swoardsdance", "bite", "slash"]
 };
@@ -176,6 +191,7 @@ var pidgeotTemplate = {
     sa: 70,
     sd: 70,
     s: 101,
+    catchrate: 45,
     img: "./img/pokemon/pidgeot.png",
     moves: ["fly", "aircutter", "airslash", "bravebird"]
 };

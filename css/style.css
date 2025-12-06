@@ -39,3 +39,19 @@
     z-index: 1000;
     /* マップの上に表示 */
 }
+
+
+#encount_flash {
+    position: fixed;
+    inset: 0;               /* top:0; right:0; bottom:0; left:0; と同じ */
+    background: white;
+    opacity: 0;
+    pointer-events: none;   /* クリックなどを邪魔しない */
+    transition: opacity 0.1s;  /* フェードの速さ（0.1秒） */
+    z-index: 9999;          /* いちばん上に出す */
+}
+
+/* フラッシュ中の状態（不透明） */
+#encount_flash.on {
+    opacity: 1;
+}

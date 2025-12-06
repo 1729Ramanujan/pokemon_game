@@ -140,8 +140,12 @@ function grassStartEvent() {
 
     // ランダムで判定
     if (Math.random() < 0.03) {
-        localStorage.setItem("userPosition", JSON.stringify(playerPosition));
-        location.href = "grass_wild_battle.html";
+        encountFlash();
+        setTimeout(() => {
+            localStorage.setItem("whereuser", "grass");
+            localStorage.setItem("userPosition", JSON.stringify(playerPosition));
+            location.href = "wild_battle.html";
+        }, 1000)
     }
 }
 
@@ -153,8 +157,12 @@ function rockStartEvent() {
 
     // ランダムで判定
     if (Math.random() < 0.05) {
-        localStorage.setItem("userPosition", JSON.stringify(playerPosition));
-        location.href = "rock_wild_battle.html";
+        encountFlash();
+        setTimeout(() => {
+            localStorage.setItem("whereuser", "rock");
+            localStorage.setItem("userPosition", JSON.stringify(playerPosition));
+            location.href = "wild_battle.html";
+        }, 1000)
     }
 }
 function blackholeStartEvent() {
@@ -162,9 +170,30 @@ function blackholeStartEvent() {
     if (!isInBlackhole(playerX, playerY)) {
         return;
     }
-    userPosition = [map_width / 2, map_height / 2];
-    localStorage.setItem("userPosition", JSON.stringify(playerPosition));
-    location.href = "legend_battle.html";
+    encountFlash();
+    setTimeout(() => {
+        playerPosition = [map_width / 2, map_height / 2];
+        localStorage.setItem("whereuser", "blackhole");
+        localStorage.setItem("userPosition", JSON.stringify(playerPosition));
+        location.href = "wild_battle.html";
+    }, 1000)
+}
+function encountFlash() {
+    const flash = document.getElementById("encount_flash");
+    flash.classList.add("on");
+    setTimeout(() => {
+        flash.classList.remove("on");
+    }, 100);  // 0.1秒で消える
+
+    // 2回目
+    setTimeout(() => {
+        flash.classList.add("on");
+    }, 200);  // 0.2秒後にもう一度光る
+
+    setTimeout(() => {
+        flash.classList.remove("on");
+    }, 300);  // 0.3秒後に消える
+
 }
 
 
