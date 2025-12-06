@@ -94,7 +94,7 @@ if (userPokebox === null) {
     userPokebox = [];
 }
 // もし手持ちのデータがあるなら、それらのポケモンを復元する
-if (savedUserParty !== null) {
+if (savedUserParty !== null && savedUserParty.length > 0) {
     restoredata(savedUserParty)
     userParty = savedUserParty.slice();
 } else {
@@ -206,7 +206,7 @@ function processFaint(isUser) {
             // 手持ちのポケモンを更新
             user_party = user_party.filter(p => p.hp > 0);
             updatePartyData();
-            localStorage.setItem("userPokebox", JSON.stringify(userParty));
+            localStorage.setItem("userParty", JSON.stringify(userParty));
 
             if (user_party.length === 0) {
                 setTimeout(() => $(".explanation").text("たたかえるポケモンはもういない..."), 500);
@@ -238,7 +238,7 @@ function processFaint(isUser) {
             if (opp_party.length === 0) {
                 setTimeout(() => {
                     updatePartyData();
-                    localStorage.setItem("userPokebox", JSON.stringify(userParty));
+                    localStorage.setItem("userParty", JSON.stringify(userParty));
                     $(".explanation").text("あいてを倒した！");
                     updatestatus(user_party, opp_party);
                     var enemy = document.getElementById("opppokemon");
@@ -320,7 +320,7 @@ function pokecatch(ballRatio, opp) {
             } else {
                 // もし手持ちがいっぱいなら、ポケモンボックスのところに情報を登録
                 updatePartyData();
-                localStorage.setItem("userPokebox", JSON.stringify(userParty));
+                localStorage.setItem("userParty", JSON.stringify(userParty));
                 userPokebox.push({ id: opp_pokemon.id, lv: opp_pokemon.lv, hp: opp_pokemon.hp });
                 localStorage.setItem("userPokebox", JSON.stringify(userPokebox));
             }
