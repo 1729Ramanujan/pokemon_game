@@ -205,6 +205,8 @@ function processFaint(isUser) {
             $(".explanation").text(user_pokemon.name + "はたおれた！");
             // 手持ちのポケモンを更新
             user_party = user_party.filter(p => p.hp > 0);
+            updatePartyData();
+            localStorage.setItem("userPokebox", JSON.stringify(userParty));
 
             if (user_party.length === 0) {
                 setTimeout(() => $(".explanation").text("たたかえるポケモンはもういない..."), 500);
@@ -235,6 +237,8 @@ function processFaint(isUser) {
 
             if (opp_party.length === 0) {
                 setTimeout(() => {
+                    updatePartyData();
+                    localStorage.setItem("userPokebox", JSON.stringify(userParty));
                     $(".explanation").text("あいてを倒した！");
                     updatestatus(user_party, opp_party);
                     var enemy = document.getElementById("opppokemon");
@@ -315,6 +319,8 @@ function pokecatch(ballRatio, opp) {
                 var isBox = false;
             } else {
                 // もし手持ちがいっぱいなら、ポケモンボックスのところに情報を登録
+                updatePartyData();
+                localStorage.setItem("userPokebox", JSON.stringify(userParty));
                 userPokebox.push({ id: opp_pokemon.id, lv: opp_pokemon.lv, hp: opp_pokemon.hp });
                 localStorage.setItem("userPokebox", JSON.stringify(userPokebox));
             }
@@ -422,23 +428,23 @@ function battlestart() {
     $("#tool1").on("click", function (event) {
         $(".explanation").text("モンスターボールを使った！！");
         setTimeout(() => {
-            pokecatch(1,opp_pokemon);
+            pokecatch(1, opp_pokemon);
         }, 1000)
     });
     // スーパーボールが押された時
     $("#tool3").on("click", function (event) {
         $(".explanation").text("スーパーボールを使った！！");
-        pokecatch(1.5,opp_pokemon);
+        pokecatch(1.5, opp_pokemon);
     });
     // ハイパーボールが押された時
     $("#tool5").on("click", function (event) {
         $(".explanation").text("ハイパーボールを使った！！");
-        pokecatch(2,opp_pokemon);
+        pokecatch(2, opp_pokemon);
     });
     // マスターボールが押された時
     $("#tool2").on("click", function (event) {
         $(".explanation").text("マスターボールを使った！！");
-        pokecatch(50000,opp_pokemon);
+        pokecatch(50000, opp_pokemon);
     });
     // きずぐすりが押された時
     $("#tool4").on("click", function (event) {
